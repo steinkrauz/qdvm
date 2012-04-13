@@ -1,0 +1,14 @@
+;change data
+ldv 0
+lsb 1
+add  ;adds to the first var
+stv 0
+ldv 1
+lsb 2
+add
+stv 1
+ldv 1
+ldv 0
+scl 0
+ret
+

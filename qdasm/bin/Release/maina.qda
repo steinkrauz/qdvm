@@ -1,0 +1,8 @@
+clk
+.wait:
+dup
+clk
+sub
+lsi 1000
+jgr .wait
+ret
