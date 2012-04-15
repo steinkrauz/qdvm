@@ -114,6 +114,7 @@ namespace qdvm {
         }
 
         public static int SendMessage(QDVMthread thr) {
+            CheckLowStack(thr.st, 3);
             int addr = thr.st.Pop();
             int MsgID = thr.st.Pop();
             int ThrID = thr.st.Pop();
@@ -127,6 +128,7 @@ namespace qdvm {
         }
         
         public static int GetMessage(QDVMthread thr) {
+            CheckLowStack(thr.st, 2);
             int AddrData = thr.st.Pop();
             int AddrMsgID = thr.st.Pop();
             QDVMmsg msg = StkQDVM.Messages.Find(delegate(QDVMmsg mess){
@@ -139,6 +141,7 @@ namespace qdvm {
         }
 
         public static int KillThread(QDVMthread thr) {
+            CheckLowStack(thr.st, 1);
             int ThrID = thr.st.Pop();
             if (StkQDVM.Threads[ThrID] != null)
                 StkQDVM.Threads[ThrID] = null;
@@ -146,10 +149,18 @@ namespace qdvm {
         }
 
 
-        public static int Sleep1(QDVMthread thr) {
-            System.Threading.Thread.Sleep(1000);
+        public static int Sleep(QDVMthread thr) {
+            CheckLowStack(thr.st, 1);
+            int SleepTime = thr.st.Pop();
+            System.Threading.Thread.Sleep(SleepTime);
             return 0;
         }
+
+        public static int DoEvents(QDVMthread thr) {
+            System.Windows.Forms.Application.DoEvents();
+            return 0;
+        }
+
     }
 
     public class QDVMthread {
@@ -205,7 +216,10 @@ namespace qdvm {
             Syscalls[3] = QDVMsc.KickThread;
             Syscalls[4] = QDVMsc.SendMessage;
             Syscalls[5] = QDVMsc.GetMessage;
+            Syscalls[6] = QDVMsc.KillThread;
             Syscalls[7] = QDVMsc.DebugPrint;
+            Syscalls[8] = QDVMsc.Sleep;
+            Syscalls[9] = QDVMsc.DoEvents;
             
         }
 
