@@ -34,6 +34,8 @@ namespace qdasm {
             opc.Add("jgr",24);
             opc.Add("jge",25);
             opc.Add("jmp",26);
+            opc.Add("jz", 27);
+            opc.Add("jnz",28);
             opc.Add("pop",30);
             opc.Add("dup",31);
             opc.Add("swp",32);
@@ -240,6 +242,8 @@ namespace qdasm {
                 case "jle":
                 case "jgr":
                 case "jge":
+                case "jz":
+                case "jnz":
                 case "jmp":
                 case "cal":
                     qdasm.CodeDepot.Add(opc[ops[0]]);

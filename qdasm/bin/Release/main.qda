@@ -1,39 +1,40 @@
-;test suite
-#defnum max_count 10
-#defnum DebugPrint 7
-;#defnum WaitMS 500
-#defnum PrintTime 0
+;test suite for init
+#include syscalls.inc
 
-lsb max_count
-rnd
+#defnum ThreadCount 2
+
+lsb ThreadCount
+.make:
+  lsi .code
+  lsi .name
+  cal .MakeThread
+  dec
+  dup
+jnz .make
 .loop:
- lsi .msg
- scl DebugPrint
- pop
- clk
- stv PrintTime
- .wait:
-  cal .check_time
-  lsb 1
-  hlt ;gives time to others while wait
- jeq .wait
- dec
- dup
- lsb 0
-jls .loop
-ret
-.check_time:
- clk
- ldv PrintTime
- sub
- lsi 2000
- jgr .wait_more
- lsb 0
- jmp .end
-.wait_more:
- lsb 1
- .end:
+  lsi .name
+  scl FindThread
+  hlt
+  lsi -1
+jne .loop
 ret
 
-.msg:
-ds "Hello, World!"
+#defnum NameAddr 100
+; Args: Name->File->
+; ret: void
+.MakeThread:
+  stv NameAddr
+  scl CreateThread
+  dup
+  ldv NameAddr
+  swp
+  scl NameThread
+  pop
+  scl KickThread
+  pop
+ret
+
+.code:
+ds "hello.qdm"
+.name:
+ds "hello"

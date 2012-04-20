@@ -28,6 +28,8 @@ namespace qdvm {
         public const byte VM_JGR = 24;
         public const byte VM_JGE = 25;
         public const byte VM_JMP = 26;
+        public const byte VM_JZ = 27;
+        public const byte VM_JNZ = 28;
 
         public const byte VM_POP = 30;
         public const byte VM_DUP = 31;
@@ -113,6 +115,8 @@ namespace qdvm {
                 case QDVMoc.VM_JLS: res = st.Pop() < st.Pop();break;
                 case QDVMoc.VM_JMP: res = true;break;
                 case QDVMoc.VM_JNE: res = st.Pop() != st.Pop();break;
+                case QDVMoc.VM_JZ: res = st.Pop() == 0; break;
+                case QDVMoc.VM_JNZ: res = st.Pop() != 0; break;
             }
             if (!res) addr = ip+2;
             if (addr > codes.Length || addr < 0) throw new Exception(String.Format("Jump {0} outside the code", addr));
