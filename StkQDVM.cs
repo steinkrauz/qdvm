@@ -93,6 +93,7 @@ namespace qdvm {
             CheckLowStack(thr.st,1);
             String Name = GetStrArg(thr);
             for (int i = 0; i < QDVMdef.MAX_THRD_COUNT; i++) {
+                if (StkQDVM.Threads[i] == null) continue;
                 if (StkQDVM.Threads[i].id.Equals(Name))
                     return i;
                 }
@@ -208,6 +209,7 @@ namespace qdvm {
         public static List<QDVMmsg> Messages = new List<QDVMmsg>();
         QDVMthread CurThr;
         public static int ThrId;
+        static string BaseDir;
 
         public StkQDVM() {
             Syscalls[0] = QDVMsc.CreateThread;
@@ -222,6 +224,15 @@ namespace qdvm {
             Syscalls[9] = QDVMsc.DoEvents;
             
         }
+
+        public void Init(string dir) {
+            BaseDir = dir;
+            QDVMthread tr0 = new QDVMthread();
+            tr0.Load(String.Format("{0}{1}main.qdm",BaseDir,Path.DirectorySeparatorChar));
+            Threads[0] = tr0;
+            tr0.Kick();
+        }
+
 
         void Executor(QDVMthread thr) {
             byte[] opcodes;
@@ -253,6 +264,8 @@ namespace qdvm {
                     case QDVMoc.VM_JLE:
                     case QDVMoc.VM_JLS:
                     case QDVMoc.VM_JMP:
+                    case QDVMoc.VM_JZ:
+                    case QDVMoc.VM_JNZ:
                         thr.ip = QDVMoc.GetJump(thr.st, opcodes, thr.ip);
                     break;
 
