@@ -5,28 +5,42 @@ using System.Text;
 namespace qdvm {
     class Program {
         static void Main(string[] args) {
-            //QDVMthread t1, t2;
-            //t1 = new QDVMthread();
-           // t2 = new QDVMthread();
-            //t1.code = new byte[] { 5, 0, 4, 1, 10, 6, 0, 5, 1, 4, 2, 10, 6, 1, 5, 0, 5, 1, 4, 1, 4, 1, 20, 28,0,4,3,10, 100, 0, 110 };
-          //  t1.Load("main.qdm");
-          //  t1.Kick();
-          //  t2.Load("main.qdm");
-          //  t2.Kick();
-
+            byte mode = 0;
+            bool needLog = false;
+            string baseDir = ".";
+            string logFile = "console.txt";
             foreach (string par in args) {
-                if (par.Equals("-dps"))
-                    StkQDVM.PrintStack = true;
+              
+                switch (par){
+                   case "-dps":
+                    if (par.Equals("-dps"))
+                        StkQDVM.PrintStack = true;
+                    break;
+                    case "-base":
+                        mode = 1;
+                    continue;
+                    case "-log":
+                        needLog = true;
+                        mode = 2;
+                    continue;
+                };
+                switch (mode) {
+                    case 1:
+                        baseDir = par;
+                        break;
+                    case 2: logFile = par;
+                        break;
+                }
+                mode = 0;
             }
 
             StkQDVM VM = new StkQDVM();
-            //StkQDVM.Threads[0] = t1;
-            //StkQDVM.Threads[1] = t2;
-            VM.Init(".");
+            VM.Init(baseDir);
             try {
                 VM.Run();
             } catch (Exception ex) {
                 Console.WriteLine("VM failed: {0}", ex.Message);
+                //Console.WriteLine(ex.StackTrace);
             }
         }
     }
