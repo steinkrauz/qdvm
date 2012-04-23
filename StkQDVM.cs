@@ -183,13 +183,18 @@ namespace qdvm {
         }
         public void Kick() { state = QDThrState.WAIT; }
         public void Load(string Name) {
-            BinaryReader br = new BinaryReader(File.Open(Name, FileMode.Open));
-            byte type = br.ReadByte();
-            switch (type) {
-                case 0: LoadAbsCode(br); break;
-                default: throw new Exception("Unsupported file format");
+            string DiskName = String.Format("{0}{1}{2}", StkQDVM.BaseDir, Path.DirectorySeparatorChar, Name);
+            try {
+                BinaryReader br = new BinaryReader(File.Open(DiskName, FileMode.Open));
+                byte type = br.ReadByte();
+                switch (type) {
+                    case 0: LoadAbsCode(br); break;
+                    default: throw new Exception("Unsupported file format");
+                }
+                br.Close();
+            } catch (Exception ex) {
+                Console.Out.WriteLine(ex.Message);
             }
-            br.Close();
         }
 
         private void LoadAbsCode(BinaryReader br) {
@@ -209,7 +214,7 @@ namespace qdvm {
         public static List<QDVMmsg> Messages = new List<QDVMmsg>();
         QDVMthread CurThr;
         public static int ThrId;
-        static string BaseDir;
+        public static string BaseDir;
 
         public StkQDVM() {
             Syscalls[0] = QDVMsc.CreateThread;
@@ -228,7 +233,7 @@ namespace qdvm {
         public void Init(string dir) {
             BaseDir = dir;
             QDVMthread tr0 = new QDVMthread();
-            tr0.Load(String.Format("{0}{1}main.qdm",BaseDir,Path.DirectorySeparatorChar));
+            tr0.Load("main.qdm");
             Threads[0] = tr0;
             tr0.Kick();
         }
@@ -292,6 +297,7 @@ namespace qdvm {
                     default: throw new Exception(String.Format("Opcode {0} not implemented", opcodes[thr.ip - 1]));
                 }
             } catch (Exception ex) {
+                //Console.Out.WriteLine(ex.StackTrace);
                 throw new Exception(String.Format("{0} at [{1}]:{2}", ex.Message, ThrId, thr.ip - 1));
             }
             if (thr.state == QDThrState.DEAD) {
