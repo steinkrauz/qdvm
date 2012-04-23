@@ -159,6 +159,8 @@ namespace qdvm {
 
         public static int DoEvents(QDVMthread thr) {
             System.Windows.Forms.Application.DoEvents();
+            if (System.Windows.Forms.Application.OpenForms.Count<1)
+                return 1;
             return 0;
         }
 
