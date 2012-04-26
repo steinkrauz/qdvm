@@ -1,0 +1,6 @@
+;main loop test for gui
+.loop:
+scl 9
+hlt
+jz .loop
+ret
