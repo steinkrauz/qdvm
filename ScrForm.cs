@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿//using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -30,14 +30,7 @@ namespace qdvm {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // ScrForm
             // 
@@ -61,7 +54,6 @@ namespace qdvm {
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
 
         public ScrForm() {
             InitializeComponent();
@@ -69,7 +61,6 @@ namespace qdvm {
         private Bitmap BackBuffer;
         private Graphics BackGraphics;
         private char[] Symbols = { '·', '•', '●', '¤', '☼', ' ' };
-        private byte CurSymbol = 0;
 
         public ScrForm(Rectangle Bounds) {
             InitializeComponent();
@@ -78,19 +69,23 @@ namespace qdvm {
             BackGraphics = Graphics.FromImage(BackBuffer);
         }
 
+        private Font myFont2 = new System.Drawing.Font("Courier New", 40, FontStyle.Regular);
+        private Font myFont = new System.Drawing.Font("Courier New", 40, FontStyle.Regular);
+        private Brush myBrush = new SolidBrush(System.Drawing.Color.Cyan);
+        private Brush backBrush = new SolidBrush(System.Drawing.Color.MidnightBlue);
 
-        public void DrawPix() {
-            Font myFont = new System.Drawing.Font("Courier New", 40, FontStyle.Italic);
 
-            Brush myBrush = new SolidBrush(System.Drawing.Color.Red);
-            Brush backBrush = new SolidBrush(System.Drawing.Color.MidnightBlue);
-
-            BackGraphics.DrawString("█", myFont, backBrush, 30, 30);
-            BackGraphics.DrawString(Symbols[CurSymbol].ToString(), myFont, myBrush, 30, 30);
-            if (++CurSymbol > 5) CurSymbol = 0;
-
+        public void DrawPix3(int iX, int iY, int Stage)
+        {
+            BackGraphics.DrawString("█", myFont2, backBrush, iX, iY);
+            BackGraphics.DrawString(Symbols[Stage].ToString(), myFont, myBrush, iX, iY);
 
         }
+
+        public void ErasePix(int iX, int iY) {
+            BackGraphics.DrawString("█", myFont2, backBrush, iX, iY);                    
+        }
+
 
         private void ScrForm_Load(object sender, System.EventArgs e) {
             Cursor.Hide();
@@ -104,9 +99,5 @@ namespace qdvm {
             e.Graphics.DrawImageUnscaled(BackBuffer, 0, 0);
         }
 
-        private void timer1_Tick(object sender, EventArgs e) {
-            this.DrawPix();
-            this.Refresh();
-        }
-    }
+       }
 }

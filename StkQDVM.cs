@@ -321,7 +321,7 @@ namespace qdvm {
                             Console.Write("[{0}]:",ThrId);
                             foreach (int num in CurThr.st) Console.Write("{0}->", num);
                             Console.WriteLine();
-                            Console.ReadLine();
+                            //Console.ReadLine();
                         }
                         if (CurThr.state != QDThrState.RUN) break;
                     }
