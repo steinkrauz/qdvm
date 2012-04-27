@@ -1,0 +1,11 @@
+stkQDVM
+===========
+
+stkQDVM is a stack-based multi-threaded virtual machine.
+
+QDVM is an acronym for Quick and Dirty Virtual Machine. That means the software lacks both in the quality and well-thought design depatments.
+
+stkQDVM is distributed on the terms of the WTF Public License, see LICENSE for details
+
+Author: Steinkrauz
+mailto://steinkrauz@yahoo.com

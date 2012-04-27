@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* Author: Steinkrauz <steinkrauz@yahoo.com>
+ *
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details. */  
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -28,7 +36,7 @@ namespace qdvm {
         }
         static void Main(string[] args) {
             byte mode = 0;
-            bool needLog = false;
+            bool needLog = false; //for a log file feature
             bool runGUI = false;
             string baseDir = ".";
             string logFile = "console.txt";
@@ -65,6 +73,11 @@ namespace qdvm {
             StkQDVM.Syscalls[31] = DrawStar;
             StkQDVM.Syscalls[32] = GetBounds;
             StkQDVM.Syscalls[33] = EraseStar;
+	    if (needLog){
+		    /* TODO:
+		     * Initialize a log file and set the stream in VM
+		     * */
+	    }
             if (runGUI) {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
