@@ -5,7 +5,7 @@ stkQDVM is a stack-based multi-threaded virtual machine.
 
 Requires .NET Framework 2.0 or Mono
 
-QDVM is an acronym for Quick and Dirty Virtual Machine. That means the software lacks both in the quality and well-thought design depatments.
+QDVM is an acronym for Quick and Dirty Virtual Machine. That means the software lacks both in the quality and well-thought design departments.
 
 stkQDVM is distributed on the terms of the WTF Public License, see LICENSE for details
 
