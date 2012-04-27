@@ -25,7 +25,7 @@ STV <variable number>
 : Stores an integer from stack to the variable
 
 ### Aporpos
-Yes, store-to-memory opcode are forgottens. Griefie.
+Yes, store-to-memory opcodes are forgotten. Griefie.
 
 ## Arithmetic
 ADD
@@ -93,7 +93,7 @@ CAL <subroutine address>
 : Call a subroutine at the given address. 
 
 RET
-: Returns from subroutine called before. If called with no cal before, exits thr thread. 
+: Returns from subroutine called before. If called with no cal before, exits the thread. 
 
 ## Miscellaneous
 
