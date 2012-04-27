@@ -1,0 +1,118 @@
+#Opcodes
+
+## Syntax coventions
+The stack bottom is always on the right. Stack values are separated with '-'
+
+## Data opcodes
+
+LDB <addr>
+: Loads on the stack a byte from the given address
+
+LDI <addr>
+: Loads on the stack a 32-bit integer from the given address
+
+LSB <byte>
+: Loads on the stack the byte given
+
+LSI <integer>
+: Loads on the stack the Int32 given
+
+
+LDV <variable number>
+: Loads on the stack an integer from the variable
+
+STV <variable number>
+: Stores an integer from stack to the variable
+
+### Aporpos
+Yes, store-to-memory opcode are forgottens. Griefie.
+
+## Arithmetic
+ADD
+: x-y- : x+y-
+
+SUB
+: x-y- : (y-x)-
+
+MOD
+: x-y- : y%x-
+
+MUL
+: x-y- : x*y-  ;*
+
+DIV
+: x-y- : y/x-
+
+INC
+: increments a number on top by 1
+
+DEC
+: decrements a number on top by 1
+
+## Jumps
+
+The following jumps require two numbers on the stack
+x-y- : -
+
+JEQ <addr>
+: jumps if x equal y
+
+JNE <addr>
+: jumps if x not equal y
+
+JGE <addr>
+: jumps if y greater than of equal x
+
+JGR <addr>
+: jumps if y greater than x
+
+JLE <addr>
+: jumps if y lesser than of equal x
+
+JLS <addr>
+: jumps if y lesser than x
+
+The following jumps require one numbers on the stack
+x- : -
+
+JNE <addr>
+: jumps if x is not equal zero
+
+JE <addr>
+: jumps if x is equal zero
+
+And the unconditional jump, the stack in not required
+JMP <addr>
+
+## Calls
+
+SCL <syscall number>
+: Calls a system function. The number of on-stack arguments is depened on the function called. A system function returns at least one number on the stack.
+
+CAL <subroutine address>
+: Call a subroutine at the given address. 
+
+RET
+: Returns from subroutine called before. If called with no cal before, exits thr thread. 
+
+## Miscellaneous
+
+RND <max value>
+: places on the stack a random value greater than zero and lesser than max value given
+
+CLK
+: places on the stack current time in milliseconds
+
+HLT
+: halts the current threads so the ticks may go to other threads 
+
+POP
+: pops out a number on top of the stack
+
+DUP
+: duplicats a number on top of the stack
+
+SWP
+: swaps x-y- : y-x-
+
+

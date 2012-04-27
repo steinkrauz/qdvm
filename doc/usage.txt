@@ -1,0 +1,16 @@
+# QDVM.exe usage
+
+## Parameters
+qdvm.exe [-gui] [-dps] -base <code dir>
+
+-gui
+: Enables full-screen form to draw on
+
+-dps
+: prints current thread's stack content
+
+-base
+: tells QDVM where to search for code modules
+
+## Code directory
+QDVM loads its code from the given directory. The directory should contain at least one file, named 'main.qdm'. When starts, QDVM init routine creates a thread from 'main.qdm' and launches it. 
