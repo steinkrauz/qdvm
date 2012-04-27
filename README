@@ -12,5 +12,8 @@ stkQDVM is distributed on the terms of the WTF Public License, see LICENSE for d
 Run 0build.cmd or sh 0build.sh to build executables. 
 The command 'export MONO_IOMAP=all' may also be needed on *nix system to run the software.
 
+Usage: qdvm [-gui] [-dps] -base <code dir>
+See more in the ./doc directory
+
 Author: Steinkrauz
 mailto://steinkrauz@yahoo.com
