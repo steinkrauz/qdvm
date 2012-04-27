@@ -1,0 +1,39 @@
+;test suite
+#defnum max_count 10
+#defnum DebugPrint 7
+;#defnum WaitMS 500
+#defnum PrintTime 0
+
+lsb max_count
+rnd
+.loop:
+ lsi .msg
+ scl DebugPrint
+ pop
+ clk
+ stv PrintTime
+ .wait:
+  cal .check_time
+  lsb 1
+  hlt ;gives time to others while wait
+ jeq .wait
+ dec
+ dup
+ lsb 0
+jls .loop
+ret
+.check_time:
+ clk
+ ldv PrintTime
+ sub
+ lsi 2000
+ jgr .wait_more
+ lsb 0
+ jmp .end
+.wait_more:
+ lsb 1
+ .end:
+ret
+
+.msg:
+ds "Hello, World!"
