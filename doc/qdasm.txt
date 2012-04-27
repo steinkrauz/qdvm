@@ -1,0 +1,37 @@
+# QDADM: assembler for QDVM
+
+## Usage
+qdasm.exe [-p] <asm file>
+-p
+: Deprecated parameter. Will print compiled code in a form, suitable for static array initialisation in a c# source file
+
+## Files
+qdadm will eat any plain text file with any extension. However, a .qda extention was adopted for source files. An output extention is set to .qdm. The meanings behind are quite obvious: a for assembler, m for module.
+
+Module format is simple. First byte is a type designator. Always 0 as no other types of module are implemented. Four next bytes are LE-integer that is a length of a code. The rest of the bytes are the code itself.
+
+## File format
+
+The syntax rules of qdasm are scarce and easy, qd in the name do have a reason after all.
+
+- Blank lines are allowed
+- One directive or opcode per line
+- Comment begins with ';' and ends with the end of the line
+
+### Directives
+Directives are non-VM features implemented by qdasm. All directives start with # sign
+
+defnum <byte>
+: Symbolic name for a number. Currently only byte values are supported.
+
+include <path>
+: Loads an assembler source file at the given place. 
+
+### Labels
+Label is a conventional way to mark a arbitrary place in the memory. A label should be placed on its own line, prevenient the one to be marked. A label should starts with '.' and ends with ':'.
+
+Any label may be used as an argument to an opcode. In the case, label should begin with '.'. For example:
+.loop:
+ dec
+jnz .loop
+ 
